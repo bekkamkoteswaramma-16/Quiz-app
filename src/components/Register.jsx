@@ -1,0 +1,41 @@
+import { useState } from 'react';
+
+const Register = ({ users, onRegister, onSwitchToLogin }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const userExists = users.find(u => u.email === email);
+    if(userExists) {
+      alert('Email already exists!');
+      return;
+    }
+    onRegister({ name: username, email, password });
+    alert('Registration Successful! Now Login');
+  };
+
+  return (
+    <div style={{maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #4F46E5', borderRadius: '10px', backgroundColor: '#1e1e1e'}}>
+      <h2 style={{textAlign: 'center', color: 'white'}}>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <div style={{marginBottom: '15px'}}>
+          <label style={{color: 'white'}}>Username</label>
+          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} style={{width: '100%', padding: '10px', marginTop: '5px'}} required />
+        </div>
+        <div style={{marginBottom: '15px'}}>
+          <label style={{color: 'white'}}>Email</label>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} style={{width: '100%', padding: '10px', marginTop: '5px'}} required />
+        </div>
+        <div style={{marginBottom: '15px'}}>
+          <label style={{color: 'white'}}>Password</label>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} style={{width: '100%', padding: '10px', marginTop: '5px'}} required />
+        </div>
+        <button type="submit" style={{width: '100%', padding: '10px', backgroundColor: '#4F46E5', color: 'white', border: 'none', borderRadius: '5px'}}>Register</button>
+      </form>
+      <p style={{textAlign: 'center', color: 'white', marginTop: '10px'}}>Already have account? <span onClick={onSwitchToLogin} style={{color: '#4F46E5', cursor: 'pointer'}}>Login</span></p>
+    </div>
+  );
+};
+export default Register;
